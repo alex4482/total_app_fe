@@ -36,7 +36,7 @@ export const MainLayout = () => {
       <main className="flex-1 overflow-y-auto">
         <Outlet />
       </main>
-      <Footer />
+      {/* <Footer /> */}
       <ScrollToTop />
     </div>
   );

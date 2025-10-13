@@ -1,17 +1,13 @@
-import { useNavigate } from 'react-router-dom';
-
-import { Tenant } from '@/types/Tenant';
-import { EditableInputField } from '@/components/TotalAppComponents';
 import { Observation, ObservationUrgency } from '@/types/Observation';
 import { useState } from 'react';
 
-interface TenantObservationsProps {
+interface ObservationsIndentProps {
   observations: Observation[];
-  tenantId: string;
-  onAddObservation?: (tenantId: string, obs: Observation) => Promise<void>;
-  onUpdateObservation?: (tenantId: string, obs: Observation) => Promise<void>;
-  onDeleteObservation?: (tenantId: string, obsId: string) => Promise<void>;
-  onSave?: (tenantId: string, field: keyof Tenant, value: Observation[]) => Promise<void>;
+  parentId: string;
+  onAddObservation?: (parentId: string, obs: Observation) => Promise<void>;
+  onUpdateObservation?: (parentId: string, obs: Observation) => Promise<void>;
+  onDeleteObservation?: (parentId: string, obsId: string) => Promise<void>;
+  onSave?: (parentId: string, field: string, value: Observation[]) => Promise<void>;
   isEditable?: boolean;
 }
 
@@ -26,21 +22,21 @@ function urgencyBadgeClass(u: ObservationUrgency) {
   }
 }
 
-export default function TenantObservationsIndent({
+export default function ObservationsIndent({
   observations,
-  tenantId,
+  parentId,
   onSave,
   isEditable = false,
-}: TenantObservationsProps) {
+}: ObservationsIndentProps) {
   const [items, setItems] = useState<Observation[]>(observations);
   const [newText, setNewText] = useState("");
   const [newUrgency, setNewUrgency] = useState<ObservationUrgency>(ObservationUrgency.SIMPLE);
 
   const urgencyLabel: Record<ObservationUrgency, string> = {
-  SIMPLE: "Simplu",
-  URGENT: "Urgent",
-  TODO: "De facut",
-};
+    SIMPLE: "Simplu",
+    URGENT: "Urgent",
+    TODO: "De facut",
+  };
 
   // handler
   const handleUrgencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -49,17 +45,17 @@ export default function TenantObservationsIndent({
 
   const handleSave = async (value: Observation[]) => {
     if (onSave) {
-      await onSave(tenantId, 'observations', value);
+      await onSave(parentId, 'observations', value);
     }
   };
 
-   const handleUpdate = async (idx: number, patch: Partial<Observation>) => {
+  const handleUpdate = async (idx: number, patch: Partial<Observation>) => {
     const updated = { ...items[idx], ...patch };
     const next = [...items];
     next[idx] = updated;
     setItems(next);
     handleSave(items);
-    //if (onUpdateObservation) await onUpdateObservation(tenantId, updated);
+    //if (onUpdateObservation) await onUpdateObservation(parentId, updated);
   };
 
   const handleAdd = async () => {
@@ -74,14 +70,14 @@ export default function TenantObservationsIndent({
     setNewText("");
     setNewUrgency(ObservationUrgency.SIMPLE);
     handleSave(items);
-    // if (onAddObservation) await onAddObservation(tenantId, obs);
+    // if (onAddObservation) await onAddObservation(parentId, obs);
   };
 
   const handleDelete = async (idx: number) => {
     const next = items.filter((_, i) => i !== idx);
     setItems(next);
     handleSave(items);
-    // if (onDeleteObservation) await onDeleteObservation(tenantId, obs.id);
+    // if (onDeleteObservation) await onDeleteObservation(parentId, obs.id);
   };
 
   return (

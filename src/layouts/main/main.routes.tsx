@@ -14,4 +14,5 @@ import {
 export const mainRoutes: RouteObject[] = [
   { path: '/', element: <Homepage /> },
   ...tenantsRoutes,
+  ...emailsRoutes,
 ];

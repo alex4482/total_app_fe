@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { cn } from '@/util/utils';
 import { FilePenLine } from 'lucide-react';
@@ -27,6 +27,11 @@ export const EditableInputField = ({
   ...props
 }: EditableInputFieldProps) => {
   const [value, setValue] = useState(initialValue);
+
+  // Sync value with initialValue when it changes
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
   const [isSaving, setIsSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isHovered, setIsHovered] = useState(false);

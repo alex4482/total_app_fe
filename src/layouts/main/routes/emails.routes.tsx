@@ -1,13 +1,13 @@
-import Emails from '@/pages/emails/Emails.tsx';
+import EmailPresets from '@/pages/email-presets/EmailPresets.tsx';
 import type { RouteObject } from 'react-router-dom';
 
 export const emailsRoutes: RouteObject[] = [
   {
-    path: '/emails',
+    path: '/email-presets',
     children: [
       {
         index: true,
-        element: <Emails />,
+        element: <EmailPresets />,
       },
     ],
   },

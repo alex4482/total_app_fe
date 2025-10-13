@@ -1,101 +1,46 @@
-import { TenantList } from '@/components/TotalAppComponents';
+import { TenantList } from '@/components/TotalAppComponents/TenantsList/TenantsList';
 
 import '../../styles/globals.css';
 import AddTenantModal from './components/AddTenantModal';
-import TenantTabs from './components/layout/TenantTabs';
 import TenantDetails from './components/tenant-details/TenantDetails';
-import { getTenantDetails } from '@/clients/tenants-client.ts';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+// ...existing code...
 
 import useTenantsStore from '@/stores/useTenantsStore.tsx';
 import useFetchTenants from '@/util/hooks/useFetchTenants';
-import useTenantsExtrasStore from '@/stores/useTenantsExtrasStore';
 
+
+import { useEffect } from 'react';
 
 export default function Tenants() {
-
-  const { tenantId } = useParams();
-  const { setVariableByName, 
-    setCurrentElement: setCurrentTenant, 
-    currentElement: currentTenant } =
-    useTenantsStore();
-  const { setVariableByName: setVariableExtrasByName } =
-    useTenantsExtrasStore();
-  const [currentTab, setCurrentTab] = useState('completed');
-
+  const { currentElement: currentTenant } = useTenantsStore();
   const { handleFetchTenants } = useFetchTenants();
 
-  const handleTabChange = (value: string) => {
-    setCurrentTab(value);
-  };
-
-  const handleGetTenantDetails = async (tenantId: string) => {
-    try {
-      setVariableExtrasByName('areTenantDetailsLoading', true);
-      const response = await getTenantDetails(tenantId);
-      setCurrentTenant(response.data);
-      window.scrollTo(0, 0); // Scroll to top
-    } catch (error) {
-      console.log('Failed to fetch tenant details: ', error);
-    } finally {
-      setVariableExtrasByName('areTenantDetailsLoading', false);
-    }
-  };
-
   useEffect(() => {
-    if (tenantId) {
-      handleGetTenantDetails(tenantId);
-    }
-    return () => {
-      setCurrentTenant(null);
-    };
-  }, [tenantId]);
-
+    handleFetchTenants();
+  }, [handleFetchTenants]);
 
   return (
-    <>
-   <div className="flex h-full w-full flex-col">
-        {/* <TenantsFilter /> */}
-        <AddTenantModal />
-        <div className="flex flex-1 sm:flex-row">
-          {/* TABS AND PROJECT DETAILS */}
-          <div
-            className={`w-full ${
-              tenantId ? 'hidden sm:flex sm:flex-1 sm:flex-row' : 
-              'sm:hidden'
-            } `}
-          >
-            <div className="flex flex-col sm:basis-2/6">
-              <TenantTabs currentTab={currentTab} onChange={handleTabChange} />
-            </div>
-            <div className="relative flex flex-grow flex-col overflow-y-auto sm:basis-4/6">
-              {tenantId && currentTenant && (
-                <div className="mt-2 w-full">
-                  <TenantDetails
-                    handleGetTenantDetails={handleGetTenantDetails}
-                    fetchTenants={handleFetchTenants}
-                  />
-                </div>
-              )}
-            </div>
+    <div className="flex h-full w-full flex-row">
+      {/* Left: Scrollable Tenants List */}
+      <div className="w-full sm:w-1/3 md:w-1/4 border-r dark:border-b-slate-700 overflow-y-auto bg-background">
+        <TenantList />
+      </div>
+      {/* Right: Tenant Details or Add Tenant */}
+      <div className="flex-1 flex flex-col items-center justify-start p-4">
+        {currentTenant ? (
+          <TenantDetails />
+        ) : (
+          <div className="w-full max-w-xl">
+            <h2 className="text-xl font-semibold mb-4">Select a tenant or create a new one</h2>
+            <AddTenantModal />
           </div>
-
-        </div>
+        )}
       </div>
-     <div className="h-screen w-full p-4 md:p-6 bg-background">
-      <div className="grid gap-4 md:gap-2 md:grid-cols-[1fr_2fr] h-full">
-        <div className="flex-1">
-          <TenantList />
-        </div>  
-        <div className="flex-1">
-          <TenantList />
-        </div>
-      </div>
-    </div> 
-    </>
+    </div>
   );
 }
-
  
+
+
+
 

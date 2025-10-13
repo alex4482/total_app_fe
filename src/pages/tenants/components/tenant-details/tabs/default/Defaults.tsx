@@ -9,7 +9,7 @@ import { toast } from '@/components/ui/use-toast';
 import { DetailField } from './Fields';
 import { useTenantFields } from './hooks';
 import useTenantsExtrasStore from '@/stores/useTenantsExtrasStore';
-import TenantObservationsIndent from '../../../TenantObservationsIndent';
+import ObservationsIndent from '../../../ObservationsIndent';
 
 export default function Default() {
  
@@ -91,10 +91,10 @@ export default function Default() {
           {currentTenant.observations && (
             <div>
               <Label className="mb-1 block font-medium">Observatii:</Label>
-              <TenantObservationsIndent
+              <ObservationsIndent
                 observations={currentTenant.observations}
-                tenantId={currentTenant.id}
-                onSave={handleUpdateField}
+                parentId={currentTenant.id}
+                onSave={(parentId, _field, value) => handleUpdateField(parentId, 'observations', value)}
               />
             </div>
           )}

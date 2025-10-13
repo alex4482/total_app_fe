@@ -7,8 +7,8 @@ import useTenantsExtrasStore from '@/stores/useTenantsExtrasStore.tsx'; // Repla
 import { Tenant } from '@/types/Tenant';
 
 const useFetchTenants = () => {
-  const { setVariableByName: setVariableExtrasByName } = useTenantsExtrasStore(); // Replace with your actual store method
-  const { setVariableByName } = useTenantsStore(); // Replace with your actual store method
+  const { setVariableByName: setVariableExtrasByName } = useTenantsExtrasStore();
+  const { setVariableByName } = useTenantsStore();
   const handleFetchTenants = useCallback(async () => {
     try {
       // Optionally enable tenant loading state if needed
@@ -28,8 +28,10 @@ const useFetchTenants = () => {
           inactiveTenants.push(tenant);
         } 
       });
-      setVariableExtrasByName('activeTenants', activeTenants);
-      setVariableExtrasByName('inactiveTenants', inactiveTenants);
+  setVariableExtrasByName('activeTenants', activeTenants);
+  setVariableExtrasByName('inactiveTenants', inactiveTenants);
+  // Update the main elements list so the UI refreshes
+  setVariableByName('elements', fetchedTenants);
 
     } catch (error) {
       console.error('Failed to fetch tenants: ', error);

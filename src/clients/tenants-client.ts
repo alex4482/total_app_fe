@@ -2,14 +2,14 @@ import type { CreateTenantProps, Tenant } from '@/types/Tenant';
 
 import api from '.';
 
-const tenantUrlKeyword = 'tenant';
+const tenantUrlKeyword = 'tenants';
 
 export const listTenants = async (
   tenantId?: string
 ) => {
-  let url = '/' + tenantUrlKeyword + '?';
+  let url = '/' + tenantUrlKeyword;
   if (tenantId) {
-    url += `tenantId=${tenantId}&`;
+    url += `?tenantId=${tenantId}&`;
   }
 
   return await api.get(url);

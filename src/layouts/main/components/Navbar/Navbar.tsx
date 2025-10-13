@@ -36,6 +36,10 @@ const routeList: RouteProps[] = [
     label: 'Chiriasi',
   },
   {
+    href: '/email-presets',
+    label: 'Emailuri predefinite',
+  },
+  {
     href: '/files',
     label: 'Fișiere',
   },
