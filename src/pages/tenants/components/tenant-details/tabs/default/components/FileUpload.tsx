@@ -12,7 +12,6 @@ import 'filepond/dist/filepond.min.css';
 import { revertFile, uploadFile } from '@/clients/documents-client';
 import { FilePondFile, FilePondInitialFile } from 'filepond';
 
-import { uploadLocation } from '@/types/Files';
 
 registerPlugin(FilePondPluginFileRename);
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
@@ -92,7 +91,6 @@ export default function FileUpload({
 
   const tenantId = currentTenant?.id ?? '';
   const fileType = addContentForm.getValues('fileType') ?? '';
-  const costs = addContentForm.getValues('costs') ?? [];
 
   const { handleUpload, handleRevert } = useFilePondServer(
     tenantId,

@@ -1,7 +1,5 @@
 import '../../styles/globals.css';
 
-import { useEffect, useState } from 'react';
-
 // import AvinciLogo from '@/assets/logo/avinciLogo.svg?react';
 // import TasKeepLogo from '@/assets/logo/taskeepLogo.svg?react';
 // import useStatisticsStore from '@/stores/useStatisticsStore';

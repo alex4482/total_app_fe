@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react';
-
 // import { useAuthContext, useCurrentUser } from '@/Auth';
 // import useStompClient from '@/clients/stomp-client';
 // import useFetchFiles from '@/util/hooks/useFetchFiles';
@@ -10,7 +8,7 @@ import { useEffect, useRef } from 'react';
 // import { useSoundFilePath } from '@/util/hooks/useSoundFilePath';
 import { Outlet } from 'react-router-dom';
 
-import { Footer, Header, ScrollToTop, Search } from './components';
+import { /* Footer, */ Header, ScrollToTop, Search } from './components';
 
 export const MainLayout = () => {
   // const { currentSession } = useAuthContext();

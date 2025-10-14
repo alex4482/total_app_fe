@@ -1,6 +1,6 @@
 import api from '@/clients/index.ts';
 
-import type { EmailSendData, EmailPresets } from '@/types/Emails.ts';
+import type { EmailPreset } from '@/types/EmailPresets.ts';
 
 export const EmailsApiClient = {
   listInvoicePresets: async () => {
@@ -8,11 +8,11 @@ export const EmailsApiClient = {
     return (await api.get(url)).data;
   },
 
-  sendEmails: async (emailsData: EmailSendData) => {
+  sendEmails: async (emailsData: EmailPreset[]) => {
     return (await api.post('/emails', emailsData)).data;
   },
 
-  savePresets: async (presets: EmailPresets) => {
+  savePresets: async (presets: EmailPreset[]) => {
     return (await api.post('/events/invoice-presets', presets)).data;
   },
 };

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useGeneralStore from '@/stores/useGeneralStore.tsx';
 // import useTasksStore from '@/stores/useTasksStore.tsx';
 import { Menu, Plus, SearchIcon } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Button, buttonVariants } from '@/components/ui/button.tsx';
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
@@ -49,7 +49,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const { setVariableByName } = useGeneralStore();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // const { toggleTaskCreateOpen, toggleProjectCreateOpen } = useTasksStore();
 

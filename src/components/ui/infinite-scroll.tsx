@@ -25,7 +25,7 @@ export default function InfiniteScroll({
   centerLoader = true,
   skipFirstLoad = false, // Default to false (load initially)
 }: InfiniteScrollProps) {
-  const observer = React.useRef<IntersectionObserver>();
+  const observer = React.useRef<IntersectionObserver | null>(null);
   const firstLoad = React.useRef(true); // Tracks if it's the first load
 
   const observerRef = React.useCallback(

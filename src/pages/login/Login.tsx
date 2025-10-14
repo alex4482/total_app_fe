@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import TotalAppLogo from '@/assets/logo/totalAppLogo.svg?react';
+// import TotalAppLogo from '@/assets/logo/totalAppLogo.svg?react';
 import { useAuthContext } from '@/Auth';
 import { loginUser } from '@/clients/auth-client.ts';
 import ModeToggle from '@/layouts/main/components/Navbar/ModeToggle';

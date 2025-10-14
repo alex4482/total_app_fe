@@ -14,7 +14,7 @@ export const TenantList: React.FC = () => {
   //const PAGE_SIZE = 20;
   const {
     elements: tenants,
-    loading,
+    // loading,
   // setVariableByName: setTenantListVariable,
     setCurrentElement,
     currentElement,

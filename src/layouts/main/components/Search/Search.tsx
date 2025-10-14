@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
 import useGeneralStore from '@/stores/useGeneralStore';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import {
   CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
-  CommandItem,
+  // CommandItem,
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
@@ -18,7 +18,7 @@ export function Search() {
 
   const { isSearchOpen, setVariableByName } = useGeneralStore();
  
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleOnValueChange = (newValue: any) => {
     if (newValue) {
