@@ -53,8 +53,6 @@ const TenantDetails: React.FC = () => {
       phoneNumbers,
       observations,
       pf,
-      active: currentTenant.active,
-      attachmentIds: currentTenant.attachmentIds,
     });
     setEditMode(false);
     await handleFetchTenants();

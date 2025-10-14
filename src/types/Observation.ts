@@ -1,5 +1,4 @@
 export interface Observation {
-    id: string;
     message: string;
     type: ObservationUrgency;
 }

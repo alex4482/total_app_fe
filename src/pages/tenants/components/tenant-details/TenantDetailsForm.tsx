@@ -33,7 +33,7 @@ const TenantDetailsForm: React.FC<TenantDetailsFormProps> = ({
   const handleRemovePhone = (idx: number) => setPhoneNumbers(phoneNumbers.filter((_, i) => i !== idx));
   const handleUpdatePhone = (idx: number, value: string) => setPhoneNumbers(phoneNumbers.map((p, i) => i === idx ? value : p));
 
-  const handleAddObservation = () => setObservations([...observations, { id:'obs_' + Date.now(), message: '', type: ObservationUrgency.SIMPLE }]);
+  const handleAddObservation = () => setObservations([...observations, { message: '', type: ObservationUrgency.SIMPLE }]);
   const handleRemoveObservation = (idx: number) => setObservations(observations.filter((_, i) => i !== idx));
   const handleUpdateObservation = (idx: number, value?: string, type?: ObservationUrgency | string) =>
     setObservations(observations.map((obs, i) =>

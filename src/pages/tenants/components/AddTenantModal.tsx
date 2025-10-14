@@ -1,27 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { useAuthContext,  } from '@/Auth';
 import { createTenant } from '@/clients/tenants-client.ts';
 import useGeneralStore from '@/stores/useGeneralStore.tsx';
 import useTenantsStore from '@/stores/useTenantsStore';
 import useFetchTenants from '@/util/hooks/useFetchTenants';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format } from 'date-fns';
-import { CalendarDays, ChevronsUpDown, Plus, Trash } from 'lucide-react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Button, buttonVariants } from '@/components/ui/button.tsx';
-import { Calendar } from '@/components/ui/calendar.tsx';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command.tsx';
 import {
   Drawer,
   DrawerContent,
@@ -39,22 +27,7 @@ import {
   FormMessage,
 } from '@/components/ui/form.tsx';
 import { Input } from '@/components/ui/input.tsx';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover.tsx';
-// Assuming similar structure for Drawer
 import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
 import {
   Sheet,
   SheetContent,
@@ -63,7 +36,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { Textarea } from '@/components/ui/textarea.tsx';
 import { useToast } from '@/components/ui/use-toast.ts';
 import { ObservationUrgency } from '@/types/Observation';
 import { CreateTenantProps } from '@/types/Tenant';
@@ -73,12 +45,9 @@ export default function AddTenantModal() {
   const { isMobile } = useGeneralStore();
   const {
     isCreateElementOpen,
-    isSearchElementOpen,
     toggleElementCreateOpen,
-    setVariableByName,
   } = useTenantsStore();
   const { handleFetchTenants } = useFetchTenants();
-  // const { can } = useAuthContext();
 
   const [isCreating, setIsCreating] = useState(false);
 
@@ -94,7 +63,7 @@ export default function AddTenantModal() {
     cui: z
       .string().optional(),
     emails: z.array(
-      z.email()
+      z.string().email()
     ).optional(),
     phoneNumbers: z.array(
       z.string()
@@ -114,51 +83,24 @@ export default function AddTenantModal() {
       pf: false,
     },
   });
-
-  type FormValues = z.infer<typeof formSchema>;
-
+  
   const { fields: fieldsEmail, append: appendEmail, remove: removeEmail } =
-    useFieldArray<FormValues, 'emails'>({
+    useFieldArray({
       control: tenantForm.control,
-      name: "emails",
+      name: "emails" as never,
+    });
+    
+  const { fields: fieldsPN, append: appendPN, remove: removePN } =
+    useFieldArray({
+      control: tenantForm.control,
+      name: "phoneNumbers" as never,
     });
   
   const { fields: fieldsObs, append: appendObs, remove: removeObs } =
-    useFieldArray<FormValues, "observations">({
+    useFieldArray({
       control: tenantForm.control,
       name: "observations",
     });
-
-  const { fields: fieldsPN, append: appendPN, remove: removePN } =
-    useFieldArray<FormValues, "phoneNumbers">({
-      control: tenantForm.control,
-      name: "phoneNumbers",
-    });
-
-  const watchEmails = tenantForm.watch('emails');
-  const watchObservations = tenantForm.watch('observations');
-  const watchPhoneNumbers = tenantForm.watch('phoneNumbers');
-
-  const handleAddEmail = () => {
-    appendEmail('');
-  };
-  const handleRemoveEmail = (index: number) => {
-    removeEmail(index);
-  };
-
-   const handleAddObs = () => {
-    appendObs({message: "", type: ObservationUrgency.SIMPLE });
-  };
-  const handleRemoveObs = (index: number) => {
-    removeObs(index);
-  };
-
-   const handleAddPN = () => {
-    appendPN('');
-  };
-  const handleRemovePN = (index: number) => {
-    removePN(index);
-  };
 
   const handleCreateTenant = async (values: CreateTenantProps) => {
     try {
@@ -190,12 +132,10 @@ export default function AddTenantModal() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     handleCreateTenant(values);
-    //setVariableByName('subcomponents', []);
   };
 
   const handleModalOpenChange = (open: boolean) => {
     toggleElementCreateOpen(open);
-    // setVariableByName('subcomponents', []);
     if (!open) {
       // Assuming you want to clear errors when the modal closes
       tenantForm.clearErrors([
@@ -305,7 +245,7 @@ export default function AddTenantModal() {
               <FormField
                 control={tenantForm.control}
                 name="emails"
-                render={({ field }) => (
+                render={() => (
                 <FormItem>
                   <FormLabel>Emailuri</FormLabel>
                   <FormControl>
@@ -347,7 +287,7 @@ export default function AddTenantModal() {
               <FormField
                 control={tenantForm.control}
                 name="phoneNumbers"
-                render={({ field }) => (
+                render={() => (
                 <FormItem>
                   <FormLabel>Numere de telefon</FormLabel>
                   <FormControl>
@@ -387,7 +327,7 @@ export default function AddTenantModal() {
               <FormField
                 control={tenantForm.control}
                 name="observations"
-                render={({ field }) => (
+                render={() => (
                 <FormItem>
                   <FormLabel>Alte observatii</FormLabel>
                   <FormControl>

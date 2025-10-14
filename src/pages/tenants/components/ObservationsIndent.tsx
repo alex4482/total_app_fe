@@ -61,7 +61,6 @@ export default function ObservationsIndent({
   const handleAdd = async () => {
     if (!newText.trim()) return;
     const obs: Observation = {
-      id: `obs_${Date.now()}`,
       message: newText.trim(),
       type: newUrgency,
     };
@@ -116,7 +115,7 @@ export default function ObservationsIndent({
       <ul className="space-y-2">
         {items.map((obs, idx) => (
           <li
-            key={obs.id}
+            key={idx + ': ' + obs.message}
             className="rounded-2xl border p-3 flex flex-col gap-2"
           >
             <div className="flex items-center gap-2">
