@@ -1,7 +1,7 @@
-  import type { EmailSendData } from '@/types/Emails';
+  import type { EmailPreset } from '@/types/EmailPresets';
   import { createAbstractElementsStore } from './useAbstractStore';
 
-  const useEmailsStore = createAbstractElementsStore<EmailSendData>();
+  const useEmailsStore = createAbstractElementsStore<EmailPreset>();
   
 
   // export interface EmailsState {
