@@ -23,7 +23,7 @@ jobs:
         env:
           IMAGE: ghcr.io/${{ github.repository_owner }}/total_app_fe:latest
         run: |
-          docker build -t "$IMAGE" 
+          docker build -t "$IMAGE" .
           docker push "$IMAGE"
 
       - name: Setup SSH
