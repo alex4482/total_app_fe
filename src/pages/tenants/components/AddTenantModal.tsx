@@ -75,7 +75,7 @@ export default function AddTenantModal() {
   const tenantForm = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: 'asd',
+      name: '',
       cui: '',
       emails: [],
       observations: [],

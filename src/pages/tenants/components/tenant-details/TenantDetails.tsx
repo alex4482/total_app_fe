@@ -3,13 +3,6 @@ import useTenantsStore from '@/stores/useTenantsStore.tsx';
 import TenantDetailsForm from './TenantDetailsForm';
 import TenantAttachments from './TenantAttachments';
 import React, { useRef } from 'react';
-// import { Paperclip, FileText } from 'lucide-react';
-// Mocked attachments for demonstration
-const mockAttachments = [
-  { id: 'file1', name: 'contract.pdf', type: 'pdf' },
-  { id: 'file2', name: 'factura_octombrie.png', type: 'image' },
-  { id: 'file3', name: 'notificare.docx', type: 'doc' },
-];
 import { createTenant } from '@/clients/tenants-client';
 import useFetchTenants from '@/util/hooks/useFetchTenants';
 
@@ -59,18 +52,23 @@ const TenantDetails: React.FC = () => {
   };
 
   // Dropzone logic
-  const [attachments, setAttachments] = React.useState(mockAttachments);
+  interface Attachment {
+    id: string;
+    name: string;
+    type: string;
+  }
+  const [attachments, setAttachments] = React.useState<Attachment[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!editMode) return;
     const files = Array.from(e.dataTransfer.files);
-    // Mock upload: just add to attachments list
+    // Upload files: add to attachments list
     setAttachments((prev) => [
       ...prev,
       ...files.map((file, idx) => ({
-        id: 'mock_' + Date.now() + '_' + idx,
+        id: 'file_' + Date.now() + '_' + idx,
         name: file.name,
         type: file.type.includes('pdf') ? 'pdf' : file.type.includes('image') ? 'image' : 'doc',
       })),
@@ -83,7 +81,7 @@ const TenantDetails: React.FC = () => {
     setAttachments((prev) => [
       ...prev,
       ...files.map((file, idx) => ({
-        id: 'mock_' + Date.now() + '_' + idx,
+        id: 'file_' + Date.now() + '_' + idx,
         name: file.name,
         type: file.type.includes('pdf') ? 'pdf' : file.type.includes('image') ? 'image' : 'doc',
       })),

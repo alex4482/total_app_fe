@@ -2,23 +2,22 @@ import React, { useState } from 'react';
 import EmailPresetsList from './EmailPresetsList';
 import EmailPresetDetails from './EmailPresetDetails';
 import EmailPresetFileDropzone from './EmailPresetFileDropzone';
-import { mockEmailPresets } from './mockEmailPresets';
+import { EmailPreset } from '@/types/EmailPresets';
 
-// Mock files for demo
-const mockFiles = [
-  { id: 'file1', name: 'factura_octombrie.pdf', size: 123456 },
-  { id: 'file2', name: 'notificare_client.docx', size: 45678 },
-  { id: 'file3', name: 'contract_colaborare.pdf', size: 234567 },
-];
+interface FileType {
+  id: string;
+  name: string;
+  size: number;
+}
 
 const EmailPresets: React.FC = () => {
-  const [presets, setPresets] = useState([...mockEmailPresets]);
-  const [selectedId, setSelectedId] = useState<string | null>(presets[0]?.id || null);
+  const [presets, setPresets] = useState<EmailPreset[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [editMode, setEditMode] = useState(false);
-  const [formState, setFormState] = useState(() => presets.find(p => p.id === selectedId) || null);
+  const [formState, setFormState] = useState<EmailPreset | null>(null);
   const [sendMode, setSendMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<string[]>(presets.map(p => p.id));
-  const [files, setFiles] = useState(mockFiles);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [files, setFiles] = useState<FileType[]>([]);
   const [showDropzone, setShowDropzone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
@@ -83,11 +82,11 @@ const EmailPresets: React.FC = () => {
     setSelectedIds(ids => ids.includes(id) ? ids.filter(x => x !== id) : [...ids, id]);
   };
 
-  // Dropzone logic (mock, just adds file to list)
+  // Dropzone logic (adds file to list)
   const handleFilesAdded = (newFiles: File[]) => {
     setFiles(prev => [
       ...prev,
-      ...newFiles.map((f, idx) => ({ id: 'mock_' + Date.now() + '_' + idx, name: f.name, size: f.size })),
+      ...newFiles.map((f, idx) => ({ id: 'file_' + Date.now() + '_' + idx, name: f.name, size: f.size })),
     ]);
     setShowDropzone(false);
     setSuccess('Fișierele au fost încărcate cu succes!');
