@@ -15,16 +15,15 @@ export const listTenants = async (
   return await api.get(url);
 };
 
-// de modif
 export const updateTenant = async (
   id: string,
   updatedTenantFields: Partial<Tenant>
 ) => {
-  return await api.post('/' + tenantUrlKeyword + `/${id}`, updatedTenantFields);
+  return await api.patch('/' + tenantUrlKeyword + `/${id}`, updatedTenantFields);
 };
 
 export const getTenantDetails = async (tenantId: string) => {
-  return await api.get(`/tenants/${tenantId}`);
+  return await api.get('/' + tenantUrlKeyword + `/${tenantId}`);
 };
 
 export const createTenant = async (tenant: CreateTenantProps) => {
@@ -32,5 +31,5 @@ export const createTenant = async (tenant: CreateTenantProps) => {
 };
 
 export const deleteTenant = async (id: string) => {
-  return await api.delete(`/${tenantUrlKeyword}/${id}`);
+  return await api.delete('/' + tenantUrlKeyword + `/${id}`);
 };
