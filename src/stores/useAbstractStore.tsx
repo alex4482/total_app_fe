@@ -45,7 +45,7 @@
       set({ isSearchElementOpen: isOpen }),
     toggleElementDetailsOpen: (isOpen: boolean) =>
       set({ isElementDetailsOpen: isOpen }),
-    setVariableByName: (key, value) => set(state => ({ ...state, [key]: value } as AbstractElementsStoreState<A> )),
+    setVariableByName: (key, value) => set(() => ({ [key]: value } as Partial<AbstractElementsStoreState<A>> )),
     setCurrentElement: (element: A | null) =>
       set({ currentElement: element, isElementDetailsOpen: !!element }),
 
