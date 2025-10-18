@@ -13,6 +13,7 @@ interface RetryQueueItem {
 
 const api = axios.create({
   baseURL: baseURL,
+  withCredentials: true,
 });
 
 let isRefreshing = false;
