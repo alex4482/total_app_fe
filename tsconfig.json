@@ -4,9 +4,6 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
 
-    /* Deprecation silence */
-    "ignoreDeprecations": "6.0",
-
     /* Strict & checks */
     "strict": true,
     "skipLibCheck": true,
